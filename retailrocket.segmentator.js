@@ -1,47 +1,104 @@
-var retailrocket = window["retailrocket"] || {};
+/** @type {Object} */
+window.retailrocket = window.retailrocket || {};
 
-retailrocket.segmentator = (function () {
-    var visitorSegmenRecordCookieName = "rr-VisitorSegment";
+/** @type {Object} */
+window.retailrocket.segmentator = (function () {
 
-    var rrLibrary = {
-        getCookie: function (cName) {
-            var i, x, y, arRcookies = document.cookie.split(";");
-            for (i = 0; i < arRcookies.length; i++) {
-                x = arRcookies[i].substr(0, arRcookies[i].indexOf("="));
-                y = arRcookies[i].substr(arRcookies[i].indexOf("=") + 1);
-                x = x.replace(/^\s+|\s+$/g, "");
-                if (x == cName) {
-                    return unescape(y);
-                }
+    /** @const {String} */
+    var defaultVisitorSegmentRecordCookieName = 'rr-VisitorSegment';
+
+    /**
+     * Получение значения cookie
+     *
+     * @param {String} name Название
+     * @returns {null|String} Значение или null
+     */
+    function getCookie (name) {
+        var i, x, y, cookies = document.cookie.split(';');
+        for (i = 0; i < cookies.length; i++) {
+            x = cookies[i].substr(0, cookies[i].indexOf('='));
+            y = cookies[i].substr(cookies[i].indexOf('=') + 1);
+            x = x.replace(/^\s+|\s+$/g, '');
+            if (x == name) {
+                return unescape(y);
             }
-            return null;
-        },
-        daysToSecond: function (days) {
-            return days * 24 * 60 * 60;
-        },
-        setCookie: function (cName, value, expireInSecond, path) {
-            var exdate = new Date();
-            exdate.setSeconds(exdate.getSeconds() + expireInSecond);
-            var cValue = escape(value) + ((expireInSecond == null) ? "" : "; expires=" + exdate.toUTCString()) + (";path=" + (path || "/"));
-            document.cookie = cName + "=" + cValue;
         }
-    };
+        return null;
+    }
 
-    function randomInt(min, max) {
+    /**
+     * Установка cookie
+     *
+     * @param {String} name Название
+     * @param {String} value Значение
+     * @param {Number} expirationInSeconds Время жизни в секундах
+     * @param {String} path Путь
+     */
+    function setCookie (name, value, expirationInSeconds, path) {
+        var expirationDate = new Date();
+        expirationDate.setSeconds(expirationDate.getSeconds() + expirationInSeconds);
+        var cookieValue = escape(value);
+
+        if (expirationInSeconds != null) {
+            cookieValue += "; expires=" + expirationDate.toUTCString();
+        }
+
+        cookieValue += ';path=' + (path || '/');
+
+        document.cookie = name + '=' + cookieValue;
+    }
+
+    /**
+     * Хелпер для перевода дней в секунды
+     *
+     * @param {Number} days Количество дней
+     * @returns {Number} Количество секунд
+     */
+    function daysToSecond (days) {
+        return days * 24 * 60 * 60;
+    }
+
+    /**
+     * Хелпер для генерация случайного числа между min и max
+     *
+     * @param {Number} min Минимальное значение
+     * @param {Number} max Максимальное значение
+     * @returns {Number} Случайное число
+     */
+    function randomInt (min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
-    };
+    }
 
     return {
-        getVisitorSegment: function (nSegment, option) {
-            option = option || {};
-            var visitorSegmentRecord = rrLibrary.getCookie(visitorSegmenRecordCookieName);
+        /**
+         * Вычисляет, сохраняет в cookie и возвращает сегмент пользователя
+         *
+         * @param {Number} nSegment Количество сегментов
+         * @param {Object} options Параметры
+         * @param {String} options.splitName Название теста чтобы добавить в ключ cookie
+         * @param {Number} options.expireInDay=60 Cookie TTL
+         * @returns {NaN|Number} Сегмент пользователя
+         */
+        getVisitorSegment: function (nSegment, options) {
+            options = options || {};
+            var visitorSegmentCookie = defaultVisitorSegmentRecordCookieName;
 
-            if (!visitorSegmentRecord || visitorSegmentRecord.split(":")[0] != nSegment) {
-                visitorSegmentRecord = nSegment + ":" + randomInt(1, nSegment);
+            if (options.splitName) {
+                visitorSegmentCookie += '-' + options.splitName;
             }
 
-            rrLibrary.setCookie(visitorSegmenRecordCookieName, visitorSegmentRecord, rrLibrary.daysToSecond(option.expireInDay || 60), "/");
-            return visitorSegmentRecord.split(":")[1];
+            var visitorSegmentRecord = getCookie(visitorSegmentCookie);
+
+            if (!visitorSegmentRecord || visitorSegmentRecord.split(':')[0] != nSegment) {
+                visitorSegmentRecord = nSegment + ':' + randomInt(1, nSegment);
+            }
+
+            setCookie(visitorSegmentCookie, visitorSegmentRecord, daysToSecond(options.expireInDay || 60), '/');
+
+            var visitorSegment = visitorSegmentRecord.split(':')[1];
+            return parseInt(visitorSegment, 10);
+
         }
     };
+
 }());
