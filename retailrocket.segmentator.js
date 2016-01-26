@@ -33,8 +33,9 @@ window.retailrocket.segmentator = (function () {
      * @param {String} value Значение
      * @param {Number} expirationInSeconds Время жизни в секундах
      * @param {String} path Путь
+     * @param {String} domain Домен
      */
-    function setCookie (name, value, expirationInSeconds, path) {
+    function setCookie (name, value, expirationInSeconds, path, domain) {
         var expirationDate = new Date();
         expirationDate.setSeconds(expirationDate.getSeconds() + expirationInSeconds);
         var cookieValue = escape(value);
@@ -44,6 +45,10 @@ window.retailrocket.segmentator = (function () {
         }
 
         cookieValue += ';path=' + (path || '/');
+
+        if (domain) {
+            cookieValue += '; domain=' + domain;
+        }
 
         document.cookie = name + '=' + cookieValue;
     }
@@ -77,6 +82,7 @@ window.retailrocket.segmentator = (function () {
          * @param {Object} options Параметры
          * @param {String} options.splitName Название теста чтобы добавить в ключ cookie
          * @param {Number} options.expireInDay=60 Cookie TTL
+         * @param {String} options.domain Cookie домен
          * @returns {NaN|Number} Сегмент пользователя
          */
         getVisitorSegment: function (nSegment, options) {
@@ -93,7 +99,13 @@ window.retailrocket.segmentator = (function () {
                 visitorSegmentRecord = nSegment + ':' + randomInt(1, nSegment);
             }
 
-            setCookie(visitorSegmentCookie, visitorSegmentRecord, daysToSecond(options.expireInDay || 60), '/');
+            setCookie(
+                visitorSegmentCookie,
+                visitorSegmentRecord,
+                daysToSecond(options.expireInDay || 60),
+                '/',
+                options.domain
+            );
 
             var visitorSegment = visitorSegmentRecord.split(':')[1];
             return parseInt(visitorSegment, 10);
