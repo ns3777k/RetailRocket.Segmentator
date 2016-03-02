@@ -8,8 +8,16 @@
 	var numberOfSegments = 2;
 	retailrocket.segmentator.getVisitorSegment(numberOfSegments);
 
-Результатом работы кода будет номер сегмента (начиная с 1), в который попал пользователь. Принадлежность пользователя к сегменту сохраняется в cookie по умолчанию на 60 дней и обновляется на такой же период при каждом срабатывании кода.
+Или (AMD):
 
+```
+define(['retailrocket.segmentator'], function (segmentator) {
+    var numberOfSegments = 2;
+    var visitorSegment = segmentator.getVisitorSegment(numberOfSegments);
+});
+```
+
+Результатом работы кода будет номер сегмента (начиная с 1), в который попал пользователь. Принадлежность пользователя к сегменту сохраняется в cookie по умолчанию на 60 дней и обновляется на такой же период при каждом срабатывании кода.
 
 ## Сценарий проведения A/B теста с помощью Retail Rocket Segmentator
 

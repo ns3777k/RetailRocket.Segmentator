@@ -1,9 +1,10 @@
-/** @type {Object} */
-window.retailrocket = window.retailrocket || {};
-
-/** @type {Object} */
-window.retailrocket.segmentator = (function () {
-
+;(function(root, factory) {
+    if (typeof define == 'function' && typeof define.amd === 'object' && define.amd) {
+        define(['retailrocket.segmentator'], factory());
+    } else if (typeof root === 'object' && typeof root.document === 'object') {
+        root.retailrocket = factory();
+    }
+}(this, function () {
     /** @const {String} */
     var defaultVisitorSegmentRecordCookieName = 'rr-VisitorSegment';
 
@@ -59,7 +60,7 @@ window.retailrocket.segmentator = (function () {
      * @param {Number} days Количество дней
      * @returns {Number} Количество секунд
      */
-    function daysToSecond (days) {
+    function daysToSeconds (days) {
         return days * 24 * 60 * 60;
     }
 
@@ -88,13 +89,11 @@ window.retailrocket.segmentator = (function () {
         getVisitorSegment: function (nSegment, options) {
             options = options || {};
             var visitorSegmentCookie = defaultVisitorSegmentRecordCookieName;
-
             if (options.splitName) {
                 visitorSegmentCookie += '-' + options.splitName;
             }
 
             var visitorSegmentRecord = getCookie(visitorSegmentCookie);
-
             if (!visitorSegmentRecord || visitorSegmentRecord.split(':')[0] != nSegment) {
                 visitorSegmentRecord = nSegment + ':' + randomInt(1, nSegment);
             }
@@ -102,15 +101,13 @@ window.retailrocket.segmentator = (function () {
             setCookie(
                 visitorSegmentCookie,
                 visitorSegmentRecord,
-                daysToSecond(options.expireInDay || 60),
+                daysToSeconds(options.expireInDay || 60),
                 '/',
                 options.domain
             );
 
             var visitorSegment = visitorSegmentRecord.split(':')[1];
             return parseInt(visitorSegment, 10);
-
         }
     };
-
-}());
+}));
