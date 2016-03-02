@@ -2,7 +2,8 @@
     if (typeof define == 'function' && typeof define.amd === 'object' && define.amd) {
         define(['retailrocket.segmentator'], factory());
     } else if (typeof root === 'object' && typeof root.document === 'object') {
-        root.retailrocket = factory();
+        root.retailrocket = root.retailrocket || {};
+        root.retailrocket.segmentator = factory();
     }
 }(this, function () {
     /** @const {String} */
@@ -15,16 +16,23 @@
      * @returns {null|String} Значение или null
      */
     function getCookie (name) {
-        var i, x, y, cookies = document.cookie.split(';');
-        for (i = 0; i < cookies.length; i++) {
-            x = cookies[i].substr(0, cookies[i].indexOf('='));
-            y = cookies[i].substr(cookies[i].indexOf('=') + 1);
+        var cookies = document.cookie.split(';');
+        var segments = null;
+
+        for (var i = 0; i < cookies.length; i++) {
+            var x = cookies[i].substr(0, cookies[i].indexOf('='));
+            var y = cookies[i].substr(cookies[i].indexOf('=') + 1);
             x = x.replace(/^\s+|\s+$/g, '');
             if (x == name) {
-                return unescape(y);
+                try {
+                    segments = decodeURIComponent(y);
+                } catch (e) {
+                    segments = null;
+                }
             }
         }
-        return null;
+
+        return segments;
     }
 
     /**
@@ -37,9 +45,9 @@
      * @param {String} domain Домен
      */
     function setCookie (name, value, expirationInSeconds, path, domain) {
+        var cookieValue = encodeURIComponent(value);
         var expirationDate = new Date();
         expirationDate.setSeconds(expirationDate.getSeconds() + expirationInSeconds);
-        var cookieValue = escape(value);
 
         if (expirationInSeconds != null) {
             cookieValue += "; expires=" + expirationDate.toUTCString();
