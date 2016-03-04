@@ -42,6 +42,7 @@ define(['retailrocket.segmentator'], function (segmentator) {
 3.1. Переадресация на альтернативный вариант страницы
 ```	
 <script type="text/javascript">
+    var numberOfSegments = 2;
 	var visitorSegment = retailrocket.segmentator.getVisitorSegment(numberOfSegments);
 	if (visitorSegment == 1 && document.location.pathname == 'path/to/pageBeingTested.html') {
 		window.location = 'http://yourwebsite.com/path/to/alternative.html';
@@ -53,13 +54,13 @@ define(['retailrocket.segmentator'], function (segmentator) {
 
 ```
 <script type="text/javascript">
+    var numberOfSegments = 2;
 	var visitorSegment = retailrocket.segmentator.getVisitorSegment(numberOfSegments);
+
 	$(function() {
-		if (visitorSegment == 1) {
-			$('.button_ver1').css('display', 'block');  // на сайте выше по коду должна быть подключена библиотека jQuery
-		} else if (visitorSegment == 2){
-			$('.button_ver2').css('display', 'block');  // на сайте выше по коду должна быть подключена библиотека jQuery
-		}
+		// на сайте выше по коду должна быть подключена библиотека jQuery
+        var buttonSelector = '.button_ver_' + visitorSegment;
+        $(buttonSelector).css('display', 'block');
 	});
 </script>
 ````
@@ -72,16 +73,13 @@ define(['retailrocket.segmentator'], function (segmentator) {
 <script type="text/javascript" src="/path/to/retailrocket.segmentator.js"></script>
 <script type="text/javascript">
 	var numberOfSegments = 2;
-	
 	var visitorSegment = retailrocket.segmentator.getVisitorSegment(numberOfSegments);
 	var variation = 'Variation ' + visitorSegment;
-	
+
 	$(function () {
-	    if (visitorSegment == 1) {
-	        $('.button_ver1').css('display', 'block'); // на сайте выше по коду должна быть подключена библиотека jQuery
-	    } else if (visitorSegment == 2) {
-	        $(.button_ver2').css('display', 'block'); // на сайте выше по коду должна быть подключена библиотека jQuery
-	    }
+	    // на сайте выше по коду должна быть подключена библиотека jQuery
+	    var buttonSelector = '.button_ver_' + visitorSegment;
+	    $(buttonSelector).css('display', 'block');
 	});
 </script>
 ```
