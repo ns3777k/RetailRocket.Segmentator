@@ -43,8 +43,8 @@ define(['retailrocket.segmentator'], function (segmentator) {
 ```	
 <script type="text/javascript">
 	var visitorSegment = retailrocket.segmentator.getVisitorSegment(numberOfSegments);
-	if(visitorSegment==1 && document.location.pathname=="path/to/pageBeingTested.html") {
-		window.location = "http://yourwebsite.com/path/to/alternative.html";
+	if (visitorSegment == 1 && document.location.pathname == 'path/to/pageBeingTested.html') {
+		window.location = 'http://yourwebsite.com/path/to/alternative.html';
 	}
 </script>
 ```
@@ -55,10 +55,10 @@ define(['retailrocket.segmentator'], function (segmentator) {
 <script type="text/javascript">
 	var visitorSegment = retailrocket.segmentator.getVisitorSegment(numberOfSegments);
 	$(function() {
-		if(visitorSegment == 1) {
-			$.(".button_ver1").css('display','block');  // на сайте выше по коду должна быть подключена библиотека jQuery
+		if (visitorSegment == 1) {
+			$('.button_ver1').css('display', 'block');  // на сайте выше по коду должна быть подключена библиотека jQuery
 		} else if (visitorSegment == 2){
-			$.(".button_ver2").css('display','block');  // на сайте выше по коду должна быть подключена библиотека jQuery
+			$('.button_ver2').css('display', 'block');  // на сайте выше по коду должна быть подключена библиотека jQuery
 		}
 	});
 </script>
@@ -77,11 +77,10 @@ define(['retailrocket.segmentator'], function (segmentator) {
 	var variation = 'Variation ' + visitorSegment;
 	
 	$(function () {
-	    
 	    if (visitorSegment == 1) {
-	        $.(".button_ver1").css('display', 'block'); // на сайте выше по коду должна быть подключена библиотека jQuery
+	        $('.button_ver1').css('display', 'block'); // на сайте выше по коду должна быть подключена библиотека jQuery
 	    } else if (visitorSegment == 2) {
-	        $.(".button_ver2").css('display', 'block'); // на сайте выше по коду должна быть подключена библиотека jQuery
+	        $(.button_ver2').css('display', 'block'); // на сайте выше по коду должна быть подключена библиотека jQuery
 	    }
 	});
 </script>
@@ -98,21 +97,25 @@ define(['retailrocket.segmentator'], function (segmentator) {
 <script type="text/javascript">
 	var numberOfSegments = 2;
 	var visitorSegment = retailrocket.segmentator.getVisitorSegment(numberOfSegments);
-	if (visitorSegment == 1 && document.location.pathname == "path/to/oldVersion.html") {
-    		window.location = "http://yourwebsite.com/path/to/newVersion.html";
-	} else if (visitorSegment == 2 && document.location.pathname == "path/to/oldVersion.html") {
-    	var yaParams = {
-        	ab_test: 'Старая версия'
-    	};
+	var yaParams = {};
+
+	switch (true) {
+	    case visitorSegment == 1 && document.location.pathname == 'path/to/oldVersion.html':
+	        window.location = 'http://yourwebsite.com/path/to/newVersion.html';
+	        break;
+
+	    case visitorSegment == 2 && document.location.pathname == 'path/to/oldVersion.html':
+	        yaParams = {ab_test: 'Старая версия'};
+	        break;
+
+	    case visitorSegment == 1 && document.location.pathname == '/path/to/newVersion.html':
+	        yaParams = {ab_test: 'Новая версия'};
+	        break;
+
+        case visitorSegment == 2 && document.location.pathname == '/path/to/newVersion.html':
+            window.location = 'http://yourwebsite.com/path/to/oldVersion.html';
+            break;
 	}
-	else if(visitorSegment == 1 && document.location.pathname == "/path/to/newVersion.html") {
-    		var yaParams = {
-        		ab_test: 'Новая версия'
-    		};
-	}
-	else if(visitorSegment == 2 && document.location.pathname == "/path/to/newVersion.html") {
-    		window.location = "http://yourwebsite.com/path/to/oldVersion.html";
-	}	
 </script>
 ```
 
