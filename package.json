@@ -1,0 +1,55 @@
+{
+  "name": "retailrocket.segmentator",
+  "version": "1.0.0",
+  "description": "Код позволяет случайно в равных пропорциях разделить пользователей на сайте на любое количество сегментов для проведения A/B/N тестирования.",
+  "main": "dist/retailrocket.segmentator.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ns3777k/RetailRocket.Segmentator.git"
+  },
+  "author": "Andrey Chizh <avchizh@gmail.com>",
+  "contributors": [
+    {
+      "name": "Nikita Safonov",
+      "email": "ns3777k@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ns3777k/RetailRocket.Segmentator/issues"
+  },
+  "homepage": "https://github.com/ns3777k/RetailRocket.Segmentator#readme",
+  "devDependencies": {
+    "babel-plugin-check-es2015-constants": "^6.6.4",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.5.2",
+    "babel-plugin-transform-es2015-block-scoped-functions": "^6.6.4",
+    "babel-plugin-transform-es2015-block-scoping": "^6.6.4",
+    "babel-plugin-transform-es2015-classes": "^6.6.4",
+    "babel-plugin-transform-es2015-computed-properties": "^6.6.4",
+    "babel-plugin-transform-es2015-destructuring": "^6.6.4",
+    "babel-plugin-transform-es2015-duplicate-keys": "^6.6.4",
+    "babel-plugin-transform-es2015-for-of": "^6.6.0",
+    "babel-plugin-transform-es2015-function-name": "^6.5.0",
+    "babel-plugin-transform-es2015-literals": "^6.5.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.6.4",
+    "babel-plugin-transform-es2015-object-super": "^6.6.4",
+    "babel-plugin-transform-es2015-parameters": "^6.6.4",
+    "babel-plugin-transform-es2015-shorthand-properties": "^6.5.0",
+    "babel-plugin-transform-es2015-spread": "^6.6.4",
+    "babel-plugin-transform-es2015-sticky-regex": "^6.5.0",
+    "babel-plugin-transform-es2015-template-literals": "^6.6.4",
+    "babel-plugin-transform-es2015-typeof-symbol": "^6.6.0",
+    "babel-plugin-transform-es2015-unicode-regex": "^6.5.0",
+    "babel-plugin-transform-regenerator": "^6.6.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.3"
+  }
+}
