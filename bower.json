@@ -1,0 +1,22 @@
+{
+  "name": "retailrocket.segmentator",
+  "description": "Код позволяет случайно в равных пропорциях разделить пользователей на сайте на любое количество сегментов для проведения A/B/N тестирования.",
+  "main": "dist/retailrocket.segmentator.js",
+  "authors": [
+    "Andrey Chizh <avchizh@gmail.com>",
+    "Nikita Safonov <ns3777k@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/ns3777k/RetailRocket.Segmentator",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ],
+  "private": true
+}

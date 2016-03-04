@@ -88,7 +88,7 @@
         /**
          * Вычисляет, сохраняет в cookie и возвращает сегмент пользователя
          *
-         * @param {Number} nSegment Количество сегментов
+         * @param {Number} segments Количество сегментов
          * @param {Object} options Параметры
          * @param {String} options.splitName Название теста чтобы добавить в ключ cookie
          * @param {Number} options.expireInDay=60 Cookie TTL
@@ -96,15 +96,15 @@
          * @param {String} options.domain Cookie домен
          * @returns {NaN|Number} Сегмент пользователя
          */
-        getVisitorSegment (nSegment, options = {}) {
+        getVisitorSegment (segments, options = {}) {
             let visitorSegmentCookie = defaultVisitorSegmentRecordCookieName;
             if (options.splitName) {
                 visitorSegmentCookie = `${visitorSegmentCookie}-${options.splitName}`;
             }
 
             let visitorSegmentRecord = getCookie(visitorSegmentCookie);
-            if (!visitorSegmentRecord || visitorSegmentRecord.split(':')[0] != nSegment) {
-                visitorSegmentRecord = nSegment + ':' + randomInt(1, nSegment);
+            if (!visitorSegmentRecord || visitorSegmentRecord.split(':')[0] != segments) {
+                visitorSegmentRecord = segments + ':' + randomInt(1, segments);
             }
 
             setCookie(
