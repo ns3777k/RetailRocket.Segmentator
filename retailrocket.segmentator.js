@@ -15,7 +15,7 @@
     })();
 
     /**
-     * Gets cookie value by name
+     * Gets cookie value by name.
      *
      * @param {String} name
      * @returns {null|String}
@@ -41,7 +41,7 @@
     }
 
     /**
-     * Sets cookie
+     * Sets cookie.
      *
      * @param {String} name
      * @param {String} value
@@ -68,7 +68,7 @@
     }
 
     /**
-     * Helper to convert days to seconds
+     * Helper to convert days to seconds.
      *
      * @param {Number} days
      * @returns {Number} Amount of seconds
